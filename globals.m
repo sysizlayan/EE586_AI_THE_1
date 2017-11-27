@@ -22,3 +22,5 @@ CurrentState.Iteration = 0;
 
 %% THE GOAL!
 GoalState = [linspace(1,PuzzleSize*PuzzleSize-1,PuzzleSize*PuzzleSize-1),-1];
+
+puzz = NodeClass(dummy_puzzle);

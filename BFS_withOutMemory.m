@@ -1,4 +1,4 @@
-function [ map, elapsed_time, queue_size ] = BFS_withMemory( StartNode )
+function [ map, elapsed_time, visitedNodes ] = BFS_withOutMemory( StartNode )
     %Breadth_first_search to solve the Sliding puzzle problem
     global GoalState
     global CurrentState
@@ -38,8 +38,8 @@ function [ map, elapsed_time, queue_size ] = BFS_withMemory( StartNode )
             % state
             map = [flip(map_tmp)'; Node];
             
-            % Store the number of nodes for comparison
-            queue_size = length(Queue);
+            % Store the number of visited nodes for comparison
+            visitedNodes = VisitedListPosition;
             isSolved = 1;
             return
             
@@ -70,12 +70,12 @@ end
 
 %% The function takes the node and finds the map using back pointers
 function map = backTrace(Node)
-    index = 1;
+    map = []; 
+    %%Iterate until reaching empty backpointer
     while ~isequal(Node.BackPointer,[])
         Node = Node.BackPointer;
        
-        map(index) = Node;
-        index = index + 1;
+        map = [map,Node];
     end
 end
 
