@@ -47,7 +47,7 @@ function [ map, elapsed_time, queue_size ] = BFS_withMemory( StartNode )
         %% If the visited node is not goal, process it
         else
             % Find successors of the node
-            Successors = successor(Node);
+            Successors = successor_withoutHeuristic(Node);
             
             % For each successor, from 2 to 4 possible
             for i= 1:length(Successors)

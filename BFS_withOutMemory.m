@@ -23,7 +23,7 @@ function [ map, elapsed_time, queue_size ] = BFS_withMemory( StartNode )
         Node = Queue(QueuePosition);
         QueuePosition = QueuePosition + 1;  % Iterate on queue
         
-        %% Add the node to the visited nodes list to prevent loops
+        %% Cancel storing the visited nodes
         %VisitedNodes(length(VisitedNodes) + 1,:) = Node.State;
         
         %% If the visited node is goal, calculate the map and other metrics
@@ -46,7 +46,7 @@ function [ map, elapsed_time, queue_size ] = BFS_withMemory( StartNode )
         %% If the visited node is not goal, process it
         else
             % Find successors of the node
-            Successors = successor(Node);
+            Successors = successor_withoutHeuristic(Node);
             
             % For each successor
             for i= 1:length(Successors)

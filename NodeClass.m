@@ -20,12 +20,15 @@ classdef NodeClass
         end
         
         %% Takes the current state and returns successors list
-        function Successors = successor(node)
+        function Successors = successor_withoutHeuristic(node)
             global PuzzleSize
             PositionOfBlank = find(node.State == -1);  % Finds the index of the blank
-            RightOrLeftValidity = mod(PositionOfBlank, PuzzleSize);  % Required variable to check right or lef movement is valid
+            
+            % Required variable to check right or lef movement is valid
+            RightOrLeftValidity = mod(PositionOfBlank, PuzzleSize);
+            
             Successors = [];
-            %%UP
+            %% UP
             if(PositionOfBlank>PuzzleSize)  % Upward movement of blank is valid
                 %Create a copy of the node
                 node1 = NodeClass(node.State);
@@ -33,9 +36,10 @@ classdef NodeClass
                 node1.State(PositionOfBlank) = node.State(PositionOfBlank-PuzzleSize);
                 % Make moved number blank
                 node1.State(PositionOfBlank-PuzzleSize) = -1;
+                
                 Successors = [Successors;node1];  % Append to the successors list
             end
-            %%RIGHT
+            %% RIGHT
             if(RightOrLeftValidity ~= 0)  % Movement to right is valid
                 %Create a copy of the node
                 node2 = NodeClass(node.State);
@@ -46,7 +50,7 @@ classdef NodeClass
                 node2.State(PositionOfBlank+1) = -1;
                 Successors = [Successors;node2];  % Append to the successors list
             end
-            %%DOWN
+            %% DOWN
             if(PositionOfBlank<PuzzleSize*PuzzleSize-PuzzleSize+1)  % Downward movement is valid
                 %Create a copy of the node
                 node3 = NodeClass(node.State);
@@ -58,7 +62,7 @@ classdef NodeClass
                 Successors = [Successors;node3];  % Append to the successors list
             end
             
-            %%LEFT
+            %% LEFT
             if(RightOrLeftValidity ~= 1)  % Movement to left is valid
                 %Create a copy of the node
                 node4 = NodeClass(node.State);
