@@ -1,4 +1,4 @@
-function [ map, elapsed_time, visitedNodes ] = DFS_limitedDepth( StartNode )
+function [ map, elapsed_time, visitedNodes ] = DFSS_limitedDepth( StartNode )
     %Breadth_first_search to solve the Sliding puzzle problem
     global GoalState
     global CurrentState
@@ -9,8 +9,7 @@ function [ map, elapsed_time, visitedNodes ] = DFS_limitedDepth( StartNode )
     
     SearchAlgorithm = 'DFS';
     
-    Stack = StartNode;  % Initialize queue with first element
-    StackPosition = 1;  % To hold the position on the queue
+    stack = Stack(StartNode);
     
     DepthLimit = 1000;  % To prevent looping
     
@@ -26,10 +25,9 @@ function [ map, elapsed_time, visitedNodes ] = DFS_limitedDepth( StartNode )
     tic  %% Start the clock
     %Row-wise iteration on stack, holding iteration number, take upmost
     %element in each iteration
-    while(CurrentState.Iteration<= MAX_NUMBER_OF_ITERATION && StackPosition > 0)
+    while(CurrentState.Iteration<= MAX_NUMBER_OF_ITERATION && stack.StackPosition > 0)
         %% Pop a node from the stack
-        Node = Stack(StackPosition);
-        StackPosition = StackPosition - 1 ;  % Iterate on stack
+        Node = pop(stack);
         
         %% Add the node to the visited nodes list to prevent loops
         VisitedNodes(VisitedListPosition,:) = Node.State;
@@ -74,14 +72,16 @@ function [ map, elapsed_time, visitedNodes ] = DFS_limitedDepth( StartNode )
                         Successors(i).Depth = Node.Depth+1;
 
                         % Add successor to the stack
-                        StackPosition = StackPosition +1;
-                        Stack(StackPosition) = Successors(i);
+                        push(stack,Successors(i));
                     end
                 end
             end
         end
         %% Increase iteratrion after the loop
-        CurrentState.Iteration = CurrentState.Iteration+1;  
+        CurrentState.Iteration = CurrentState.Iteration+1;
+        if(mod(CurrentState.Iteration,1000)==0)
+            display(CurrentState.Iteration,'Iteration');
+        end
     end
 end
 

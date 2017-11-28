@@ -1,4 +1,4 @@
-function [ map, elapsed_time, visitedNodes ] = BFS_withOutMemory( StartNode )
+function [ map, elapsed_time, openedNodes ] = BFS_withOutMemory( StartNode )
     %Breadth_first_search to solve the Sliding puzzle problem
     global GoalState
     global CurrentState
@@ -9,19 +9,18 @@ function [ map, elapsed_time, visitedNodes ] = BFS_withOutMemory( StartNode )
     
     SearchAlgorithm = 'BFS';
     
-    Queue = StartNode;  % Initialize queue with first element
-    QueuePosition = 1;  % To hold the position on the queue
+    queue = Queue(StartNode);  % Initialize a queue with starting node
+
     CurrentState.Iteration = 0;  % Init iteration counter
     VisitedNodes = zeros(1,PuzzleSize*PuzzleSize);  % Hold the visited nodes to prevent loops in graph
     map = [];
     elapsed_time = 0;
     tic
     %Row-wise iteration on queue, holding iteration number
-    while(CurrentState.Iteration<= MAX_NUMBER_OF_ITERATION && QueuePosition<=length(Queue))
+    while(CurrentState.Iteration<= MAX_NUMBER_OF_ITERATION && queue.QueuePosition<=length(queue.QueueArray))
         
         %% Pop a node from the queue
-        Node = Queue(QueuePosition);
-        QueuePosition = QueuePosition + 1;  % Iterate on queue
+        Node = pop(queue);
         
         %% Cancel storing the visited nodes
         %VisitedNodes(length(VisitedNodes) + 1,:) = Node.State;
@@ -39,7 +38,10 @@ function [ map, elapsed_time, visitedNodes ] = BFS_withOutMemory( StartNode )
             map = [flip(map_tmp)'; Node];
             
             % Store the number of visited nodes for comparison
-            visitedNodes = VisitedListPosition;
+            %visitedNodes = VisitedListPosition;
+            
+            
+            openedNodes = queue.QueuePosition;
             isSolved = 1;
             return
             
@@ -58,13 +60,16 @@ function [ map, elapsed_time, visitedNodes ] = BFS_withOutMemory( StartNode )
                     Successors(i).BackPointer = Node;
                     
                     % Add the successor to the queue
-                    Queue(length(Queue) + 1) = Successors(i);
+                    push(queue, Successors(i));
                 end
             end
                 
         end
         %% Increase iteratrion after the loop
-        CurrentState.Iteration = CurrentState.Iteration+1;  
+        CurrentState.Iteration = CurrentState.Iteration+1;
+        if(mod(CurrentState.Iteration,1000)==0)
+            display(CurrentState.Iteration,'Iteration');
+        end
     end
 end
 
