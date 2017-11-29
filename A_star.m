@@ -62,7 +62,8 @@ function [ map, elapsed_time, visitedNodes, openedNodes ] = A_star( StartNode, H
             
             %% For backtracing, make parent, current node
             Successors(i).BackPointer = Node; 
-            
+            Successors(i).Depth = Node.Depth +1 ;
+            Successors(i).HeuristicScore = Successors(i).HeuristicScore + Successors(i).Depth;
             %% If the successor node is goal, calculate the map and other metrics
             %%then return
             if(isequal(Successors(i).State, GoalState))

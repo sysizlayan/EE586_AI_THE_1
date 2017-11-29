@@ -81,9 +81,9 @@ classdef NodeClass
             Successors = successor_withoutHeuristic(node);
             for i=1:length(Successors)
                 if(strcmp(HeuristicFunction, 'Misplaced'))
-                    Successors(i).HeuristicScore = node.Depth + heuristicMisplaced(node);
+                    Successors(i).HeuristicScore = heuristicMisplaced(node);
                 elseif(strcmp(HeuristicFunction,'Manhattan'))
-                    Successors(i).HeuristicScore = node.Depth + manhattanDistance(node);
+                    Successors(i).HeuristicScore = manhattanDistance(node);
                 end
             end
         end
