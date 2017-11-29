@@ -20,7 +20,7 @@ function [ map, elapsed_time, visitedNodes, openedNodes ] = BFS_withMemory( Star
     isSolved = 0;  % The variable holding if the puzzle is solved or not
     tic
     %Row-wise iteration on queue, holding iteration number
-    while(CurrentState.Iteration<= MAX_NUMBER_OF_ITERATION && queue.QueuePosition<=length(queue.QueueArray))
+    while(CurrentState.Iteration<= MAX_NUMBER_OF_ITERATION && queue.QueuePosition<=length(queue.QueueArray))  %Iterate while queue is not empty
         
         %% Pop a node from the queue
         Node = pop(queue);
@@ -67,7 +67,7 @@ function [ map, elapsed_time, visitedNodes, openedNodes ] = BFS_withMemory( Star
             end
                 
         end
-        %% Increase iteratrion after the loop
+        %% Increase iteration after the loop
         CurrentState.Iteration = CurrentState.Iteration+1;
         if(mod(CurrentState.Iteration,1000)==0)
             display(CurrentState.Iteration,'Iteration');

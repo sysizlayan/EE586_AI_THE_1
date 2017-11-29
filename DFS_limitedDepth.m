@@ -1,5 +1,5 @@
-function [ map, elapsed_time, visitedNodes ] = DFSS_limitedDepth( StartNode )
-    %Breadth_first_search to solve the Sliding puzzle problem
+function [ map, elapsed_time, visitedNodes ] = DFS_limitedDepth( StartNode, DepthLimit )
+    %Depth_first_search to solve the Sliding puzzle problem
     global GoalState
     global CurrentState
     global PuzzleSize
@@ -7,11 +7,9 @@ function [ map, elapsed_time, visitedNodes ] = DFSS_limitedDepth( StartNode )
     global isSolved
     global SearchAlgorithm
     
-    SearchAlgorithm = 'DFS';
+    SearchAlgorithm = 'DFS_limited';
     
     stack = Stack(StartNode);
-    
-    DepthLimit = 1000;  % To prevent looping
     
     CurrentState.Iteration = 0;  % Init iteration counter
     VisitedNodes = zeros(1,PuzzleSize*PuzzleSize);  % Hold the visited nodes to prevent loops in graph
@@ -19,13 +17,14 @@ function [ map, elapsed_time, visitedNodes ] = DFSS_limitedDepth( StartNode )
     
     map = [];
     elapsed_time = 0;
+    visitedNodes = 0;
     isSolved = 0;  % The variable holding if the puzzle is solved or not
     
     
     tic  %% Start the clock
     %Row-wise iteration on stack, holding iteration number, take upmost
     %element in each iteration
-    while(CurrentState.Iteration<= MAX_NUMBER_OF_ITERATION && stack.StackPosition > 0)
+    while(CurrentState.Iteration<= MAX_NUMBER_OF_ITERATION && stack.StackPosition > 0)  % Iterate while stack is not empty
         %% Pop a node from the stack
         Node = pop(stack);
         
@@ -77,7 +76,7 @@ function [ map, elapsed_time, visitedNodes ] = DFSS_limitedDepth( StartNode )
                 end
             end
         end
-        %% Increase iteratrion after the loop
+        %% Increase iteration after the loop
         CurrentState.Iteration = CurrentState.Iteration+1;
         if(mod(CurrentState.Iteration,1000)==0)
             display(CurrentState.Iteration,'Iteration');

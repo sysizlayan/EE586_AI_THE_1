@@ -17,7 +17,7 @@ function [ map, elapsed_time, openedNodes ] = BFS_withOutMemory( StartNode )
     elapsed_time = 0;
     tic
     %Row-wise iteration on queue, holding iteration number
-    while(CurrentState.Iteration<= MAX_NUMBER_OF_ITERATION && queue.QueuePosition<=length(queue.QueueArray))
+    while(CurrentState.Iteration<= MAX_NUMBER_OF_ITERATION && queue.QueuePosition<=length(queue.QueueArray))  %Iterate while queue is not empty
         
         %% Pop a node from the queue
         Node = pop(queue);
@@ -54,18 +54,18 @@ function [ map, elapsed_time, openedNodes ] = BFS_withOutMemory( StartNode )
             for i= 1:length(Successors)
                 
                 %If the node is in visited list, do nothing
-                if(~ismember(Successors(i).State, VisitedNodes, 'rows'))
+                %if(~ismember(Successors(i).State, VisitedNodes, 'rows'))
                     % Otherwise, make backpointer of successor the current
                     % node
                     Successors(i).BackPointer = Node;
                     
                     % Add the successor to the queue
                     push(queue, Successors(i));
-                end
+                %end
             end
                 
         end
-        %% Increase iteratrion after the loop
+        %% Increase iteration after the loop
         CurrentState.Iteration = CurrentState.Iteration+1;
         if(mod(CurrentState.Iteration,1000)==0)
             display(CurrentState.Iteration,'Iteration');

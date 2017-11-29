@@ -16,7 +16,7 @@ classdef NodeClass
             obj.BackPointer = [];
             obj.State= PuzzleArray;
             obj.Depth = 0;
-            obj.HeuristicScore = 0;
+            obj.HueristicScore = 0;
         end
         
         %% Takes the current state and returns successors list
@@ -80,35 +80,22 @@ classdef NodeClass
             global HeuristicFunction
             Successors = successor_withoutHeuristic(node);
             for i=1:length(Successors)
-                if(STRCMP(HeuristicFunction, 'Misplaced'))
+                if(HeuristicFunction == 'Misplaced')
                     Successors(i).HeuristicScore = heuristicMisplaced(node);
-                elseif(STRCMP(HeuristicFunction,'Manhattan'))
+                elseif(HeuristicFunction == 'Manhattan')
                     Successors(i).HeuristicScore = manhattanDistance(node);
-                end
             end
         end
         
         
         function misplaced_number = heuristicMisplaced(node)
             global GoalState
-            % The wrong positions will return value other than 0
-            misplaced_number = sum(node-GoalState~=0);  
+            misplaced_number = sum(node-GoalState~=0);  % The wrong positions will return value other than 0
         end
         
         
         function manhattan_distance = manhattanDistance(node)
             global GoalState
-            global PuzzleSize
-            manhattan_distance = 0;
-            PuzzleGoal = vec2mat(GoalState,PuzzleSize);
-            PuzzleWanted = vec2mat(node.State,PuzzleSize);
-            
-            for i=1:PuzzleSize
-                for j=1:PuzzleSize
-                    [row,col] = find(PuzzleGoal==PuzzleWanted(i,j));
-                    manhattan_distance = manhattan_distance + abs(i-row)+abs(j-col);
-                end
-            end
         end
         
     end
