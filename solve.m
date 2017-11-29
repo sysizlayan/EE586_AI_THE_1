@@ -1,4 +1,4 @@
-function [ elapsed_time, visitedNodeNumber, totalNodes ]  = solve( initial_node, algorithm, heuristic, max_depth, verbose )
+function [map, elapsed_time, visitedNodeNumber, totalNodes ]  = solve( initial_node, algorithm, heuristic, max_depth, verbose )
 % Takes starting algorithm, starting node, heuristic function and depth
 % limit then solves a 8-puzzle problem accordingly
 

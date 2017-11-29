@@ -23,7 +23,7 @@ resultingTotalNode = zeros(MovementNumber,MonteCarloNumber);
 
 for i = 1:MovementNumber
     for j = 1:MonteCarloNumber
-        [ resultingElapsedTime(i,j), resultingVisitedNode(i,j), resultingTotalNode(i,j) ] = solve(monteCarloMatrix(i,j),'A_STAR','Manhattan',0,0);
+        [~, resultingElapsedTime(i,j), resultingVisitedNode(i,j), resultingTotalNode(i,j) ] = solve(monteCarloMatrix(i,j),'A_STAR','Manhattan',0,0);
     end
     display(i);
 end
@@ -49,7 +49,7 @@ saveas(astar,'astar7.png');
 
 for i = 1:MovementNumber
     for j = 1:MonteCarloNumber
-        [ resultingElapsedTime(i,j), resultingVisitedNode(i,j), resultingTotalNode(i,j) ] = solve(monteCarloMatrix(i,j),'BFS_withMemory','Manhattan',0,0);
+        [~, resultingElapsedTime(i,j), resultingVisitedNode(i,j), resultingTotalNode(i,j) ] = solve(monteCarloMatrix(i,j),'BFS_withMemory','Manhattan',0,0);
     end
     display(i);
 end
@@ -75,7 +75,7 @@ saveas(bfs,'bfs7.png');
 
 for i = 1:MovementNumber
     for j = 1:MonteCarloNumber
-        [ resultingElapsedTime(i,j), resultingVisitedNode(i,j), resultingTotalNode(i,j) ] = solve(monteCarloMatrix(i,j),'IDDFS','Manhattan',0,0);
+        [ ~, resultingElapsedTime(i,j), resultingVisitedNode(i,j), resultingTotalNode(i,j) ] = solve(monteCarloMatrix(i,j),'IDDFS','Manhattan',0,0);
     end
     display(i);
 end
