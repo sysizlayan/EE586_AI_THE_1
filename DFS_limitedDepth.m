@@ -1,4 +1,4 @@
-function [ map, elapsed_time, visitedNodes ] = DFS_limitedDepth( StartNode, DepthLimit )
+function [ map, elapsed_time, visitedNodeNumber, totalNodes ] = DFS_limitedDepth( StartNode, DepthLimit )
     %Depth_first_search to solve the Sliding puzzle problem
     global GoalState
     global CurrentState
@@ -17,7 +17,8 @@ function [ map, elapsed_time, visitedNodes ] = DFS_limitedDepth( StartNode, Dept
     
     map = [];
     elapsed_time = 0;
-    visitedNodes = 0;
+    visitedNodeNumber = 0;
+    totalNodes = 0;
     isSolved = 0;  % The variable holding if the puzzle is solved or not
     
     
@@ -25,6 +26,7 @@ function [ map, elapsed_time, visitedNodes ] = DFS_limitedDepth( StartNode, Dept
     %Row-wise iteration on stack, holding iteration number, take upmost
     %element in each iteration
     while(CurrentState.Iteration<= MAX_NUMBER_OF_ITERATION && stack.StackPosition > 0)  % Iterate while stack is not empty
+
         %% Pop a node from the stack
         Node = pop(stack);
         
@@ -44,7 +46,10 @@ function [ map, elapsed_time, visitedNodes ] = DFS_limitedDepth( StartNode, Dept
             map = [flip(map_tmp)'; Node];
             
             % Store the number of visited nodes for comparison
-            visitedNodes = VisitedListPosition;
+            visitedNodeNumber = VisitedListPosition-1;
+            
+            % Store the number of total nodes for comparison
+            totalNodes = visitedNodeNumber + stack.StackPosition;
             isSolved = 1;
             return
         

@@ -1,4 +1,4 @@
-function [ map, elapsed_time, openedNodes ] = BFS_withOutMemory( StartNode )
+function [ map, elapsed_time, visitedNodeNumber, totalNodes ] = BFS_withOutMemory( StartNode )
     %Breadth_first_search to solve the Sliding puzzle problem
     global GoalState
     global CurrentState
@@ -12,7 +12,8 @@ function [ map, elapsed_time, openedNodes ] = BFS_withOutMemory( StartNode )
     queue = Queue(StartNode);  % Initialize a queue with starting node
 
     CurrentState.Iteration = 0;  % Init iteration counter
-    VisitedNodes = zeros(1,PuzzleSize*PuzzleSize);  % Hold the visited nodes to prevent loops in graph
+    %VisitedNodes = zeros(1,PuzzleSize*PuzzleSize);  % Hold the visited nodes to prevent loops in graph
+    visitedNodeNumber = 0;
     map = [];
     elapsed_time = 0;
     tic
@@ -21,7 +22,7 @@ function [ map, elapsed_time, openedNodes ] = BFS_withOutMemory( StartNode )
         
         %% Pop a node from the queue
         Node = pop(queue);
-        
+        visitedNodeNumber = visitedNodeNumber +1;
         %% Cancel storing the visited nodes
         %VisitedNodes(length(VisitedNodes) + 1,:) = Node.State;
         
@@ -37,11 +38,8 @@ function [ map, elapsed_time, openedNodes ] = BFS_withOutMemory( StartNode )
             % state
             map = [flip(map_tmp)'; Node];
             
-            % Store the number of visited nodes for comparison
-            %visitedNodes = VisitedListPosition;
-            
-            
-            openedNodes = queue.QueuePosition;
+            % Store the number of visited nodes and total nodes for comparison
+            totalNodes = queue.QueuePosition;
             isSolved = 1;
             return
             

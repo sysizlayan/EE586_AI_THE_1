@@ -1,72 +1,31 @@
-function pgenerator = monteCarloGenerate(max_movement)
+function generatedPuzzle = monteCarloGenerate(max_movement)
     global GoalState
-
-    visitedNodes = GoalState;  % The list contatining visited states
-    initialNode = NodeClass(GoalState);  % 
+    
+    initialNode = NodeClass(GoalState);
+    VisitedNodes = GoalState;  % Hold the visited nodes to prevent loops in graph
+    VisitedListPosition = 2;
+    
     depth = 0;
-    p1 = puzzle(in_order);
-
-    while depth < max_depth
-        movement = randi(4); % Take randon integer between 1-4
-        Successors = 
-        if(movement == 1)
-            p1 = moveBlankUp(p1);
-
-            alreadyVisited = false;
-            for i = 1:size(visited, 1)
-                if(visited(i) == p1.state)
-                    alreadyVisited = true;
-                end
-            end
-
-            if(alreadyVisited ~= true)
-                visited(length(visited) + 1) = p1.state;
-                depth = depth + 1;
-            end
-        elseif(movement == 2)
-            p1 = moveBlankDown(p1);
-
-            alreadyVisited = false;
-            for i = 1:size(visited, 1)
-                if(visited(i) == p1.state)
-                    alreadyVisited = true;
-                end
-            end
-
-            if(alreadyVisited ~= true)
-                visited(length(visited) + 1) = p1.state;
-                depth = depth + 1;
-            end
-        elseif(movement == 3)
-            p1 = moveBlankLeft(p1);
-
-            alreadyVisited = false;
-            for i = 1:size(visited, 1)
-                if(visited(i) == p1.state)
-                    alreadyVisited = true;
-                end
-            end
-
-            if(alreadyVisited ~= true)
-                visited(length(visited) + 1) = p1.state;
-                depth = depth + 1;
-            end
-        else
-            p1 = moveBlankRight(p1);
-
-            alreadyVisited = false;
-            for i = 1:size(visited, 1)
-                if(visited(i) == p1.state)
-                    alreadyVisited = true;
-                end
-            end
-
-            if(alreadyVisited ~= true)
-                visited(length(visited) + 1) = p1.state;
-                depth = depth + 1;
+    
+    while depth <= max_movement
+        movement = randi(100); % Take randon integer between 1-100
+        Successors = successor_withoutHeuristic(initialNode);
+        
+        for i=1:length(Successors)
+            next = Successors(mod(movement,length(Successors))+1); %take random movement
+            
+            %% If the node is not visited
+            if(~ismember(next.State, VisitedNodes, 'rows'))
+                
+                %% Store visited nodes to avoid loops
+                VisitedNodes(VisitedListPosition,:)=Successors(i).State;
+                VisitedListPosition = VisitedListPosition +1;
+                depth = depth+1;
+                initialNode = next;
+                break;
             end
         end
-    end %while end  
+    end
 
-    pgenerator = p1.state;
-end %function end
+    generatedPuzzle = initialNode;
+end

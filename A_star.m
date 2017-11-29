@@ -1,4 +1,4 @@
-function [ map, elapsed_time, visitedNodes, openedNodes ] = A_star( StartNode, HeuristicFunc )
+function [ map, elapsed_time, visitedNodeNumber, totalNodes ] = A_star( StartNode, HeuristicFunc )
 %A-star algorithm solving puzzle problem
 %takes startingn node and wanted heuristic function as input
     global GoalState
@@ -24,8 +24,8 @@ function [ map, elapsed_time, visitedNodes, openedNodes ] = A_star( StartNode, H
     
     map = [];
     elapsed_time = 0;
-    visitedNodes = 0;
-    openedNodes = 0;
+    visitedNodeNumber = 0;
+    totalNodes = 0;
     isSolved = 0;  % The variable holding if the puzzle is solved or not
     tic
     %Row-wise iteration on queue, holding iteration number, openQueue is
@@ -77,8 +77,8 @@ function [ map, elapsed_time, visitedNodes, openedNodes ] = A_star( StartNode, H
                 map = [flip(map_tmp)'; Successors(i)];
 
                  % Store the number of visited nodes for comparison
-                visitedNodes = ClosedListPosition-1;
-                openedNodes = length(OpenList) + ClosedListPosition-1;
+                visitedNodeNumber = ClosedListPosition-1;
+                totalNodes = length(OpenList) + ClosedListPosition-1;
                 isSolved = 1;
                 return
             else

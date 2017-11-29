@@ -1,4 +1,4 @@
-function [ map, elapsed_time, visitedNodes, openedNodes ] = BFS_withMemory( StartNode )
+function [ map, elapsed_time, visitedNodeNumber, totalNodes ] = BFS_withMemory( StartNode )
     %Breadth_first_search to solve the Sliding puzzle problem
     global GoalState
     global CurrentState
@@ -41,9 +41,9 @@ function [ map, elapsed_time, visitedNodes, openedNodes ] = BFS_withMemory( Star
             % state
             map = [flip(map_tmp)'; Node];
             
-             % Store the number of visited nodes for comparison
-            visitedNodes = VisitedListPosition;
-            openedNodes = queue.QueuePosition;
+             % Store the number of visited nodes and total nodes for comparison
+            visitedNodeNumber = VisitedListPosition-1;
+            totalNodes = queue.QueuePosition;
             isSolved = 1;
             return
             
