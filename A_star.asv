@@ -37,7 +37,6 @@ function [ map, elapsed_time, visitedNodes, openedNodes ] = A_star( StartNode, H
         min__heur_position = -1;  %index of the node with minimum heuristic
         for i = 1:length(OpenList)
             if(OpenList(i).HeuristicScore<min)
-                min = OpenList(i).HeuristicScore;
                 min__heur_position = i;
             end
         end
@@ -92,6 +91,8 @@ function [ map, elapsed_time, visitedNodes, openedNodes ] = A_star( StartNode, H
                         end
                     end
                 end
+                OpenList(end+1)=
+                
                 % For each element of closedlist
                 for j = 1:length(ClosedList)
                     % Check if the current node is in the closed list
@@ -103,10 +104,6 @@ function [ map, elapsed_time, visitedNodes, openedNodes ] = A_star( StartNode, H
                         end
                     end
                 end
-                
-                % If the successor has minimum heuristic and does not
-                % available in both list add it to the openlist
-                OpenList(end+1)=Successors(i);
             end
         end
         % Add the processed node to the closed list

@@ -80,10 +80,10 @@ classdef NodeClass
             global HeuristicFunction
             Successors = successor_withoutHeuristic(node);
             for i=1:length(Successors)
-                if(STRCMP(HeuristicFunction, 'Misplaced'))
-                    Successors(i).HeuristicScore = heuristicMisplaced(node);
-                elseif(STRCMP(HeuristicFunction,'Manhattan'))
-                    Successors(i).HeuristicScore = manhattanDistance(node);
+                if(strcmp(HeuristicFunction, 'Misplaced'))
+                    Successors(i).HeuristicScore = node.Depth + heuristicMisplaced(node);
+                elseif(strcmp(HeuristicFunction,'Manhattan'))
+                    Successors(i).HeuristicScore = node.Depth + manhattanDistance(node);
                 end
             end
         end
@@ -92,7 +92,7 @@ classdef NodeClass
         function misplaced_number = heuristicMisplaced(node)
             global GoalState
             % The wrong positions will return value other than 0
-            misplaced_number = sum(node-GoalState~=0);  
+            misplaced_number = sum(node.State-GoalState~=0);  
         end
         
         

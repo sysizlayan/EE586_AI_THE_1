@@ -12,6 +12,9 @@ classdef Queue < handle
             if nargin > 0  % If the first element is given         
                 queue.QueueArray = FirstElement;
                 queue.QueuePosition = 1;
+            else
+                queue.QueueArray = [];
+                queue.QueuePosition = 1;
             end
         end
         function Node = pop(self)
